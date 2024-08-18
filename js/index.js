@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 let lastScrollTop = 0;
 let timer;
-
+//Efecto en navbar
 window.addEventListener('scroll', function () {
     let currentScroll = window.scrollY || document.documentElement.scrollTop;
     
@@ -50,4 +50,47 @@ window.addEventListener('scroll', function () {
     }
     
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+});
+
+//Contadores y clientes
+document.addEventListener('DOMContentLoaded', function () {
+    const counters = document.querySelectorAll('.counter');
+    
+    const runCounter = (counter) => {
+        counter.innerText = '0'; // Resetea el contador a 0 antes de empezar
+
+        const updateCounter = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            let increment;
+
+            // Aumenta la velocidad del contador para ventas
+            if (counter.classList.contains('ventas-counter')) {
+                increment = target / 10; // Controla la velocidad de este contador específico
+            } else {
+                increment = target / 200; // Velocidad estándar para otros contadores
+            }
+            
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(updateCounter, 20); // Ajusta la frecuencia de actualización
+            } else {
+                counter.innerText = `+${target.toLocaleString()}`;
+            }
+        };
+        
+        updateCounter();
+    };
+    
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                runCounter(entry.target);
+            }
+        });
+    }, { threshold: 0.5 }); // Ajusta el threshold según tus necesidades
+    
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
 });

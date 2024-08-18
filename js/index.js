@@ -94,3 +94,43 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(counter);
     });
 });
+
+
+//Efecto transicion elementos de la pagina 
+document.addEventListener('DOMContentLoaded', function () {
+    const elementsLeft = document.querySelectorAll('.hidden-left');
+    const elementsRight = document.querySelectorAll('.hidden-right');
+
+    function checkVisibility() {
+        elementsLeft.forEach(el => {
+            if (isInViewport(el)) {
+                el.classList.add('visible');
+            } else {
+                el.classList.remove('visible');
+            }
+        });
+
+        elementsRight.forEach(el => {
+            if (isInViewport(el)) {
+                el.classList.add('visible');
+            } else {
+                el.classList.remove('visible');
+            }
+        });
+    }
+
+    function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    window.addEventListener('scroll', checkVisibility);
+    window.addEventListener('resize', checkVisibility);
+
+    checkVisibility(); // Verificar la visibilidad en carga inicial
+});

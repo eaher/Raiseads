@@ -30,6 +30,26 @@ body {
     line-height: 1.6;
 }
 
+/* Estilos generales para ocultar los elementos fuera de la pantalla inicialmente */
+.hidden-left {
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+.hidden-right {
+    opacity: 0;
+    transform: translateX(100px);
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+/* Estilos para mostrar los elementos cuando estén en el viewport */
+.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
 /*-------------------------------------*/
 
 /* Ícono de WhatsApp flotante */
